@@ -1092,29 +1092,7 @@ exists or setup the property manually. For example like this:
         <fail if="tests.failed" unless="ignore.failing.tests">Some tests failed; see details above.</fail>
     </target>
     <target depends="init,compile-test-single,-pre-test-run-single,-do-test-run-single-method,-post-test-run-single-method" description="Run single unit test." name="test-single-method"/>
-    <!--
-                
-                TEST DEBUGGING SECTION
-            -->
-    <target depends="init,compile-test-single,-pre-test-run-single" if="have.tests" name="-debug-start-debuggee-test">
-        <fail unless="test.class">Must select one file in the IDE or set test.class</fail>
-        <webproject2:test-debug excludes="" includes="${javac.includes}" testClass="${test.class}" testincludes="${javac.includes}"/>
-    </target>
-    <target depends="init,compile-test-single,-pre-test-run-single" if="have.tests" name="-debug-start-debuggee-test-method">
-        <fail unless="test.class">Must select one file in the IDE or set test.class</fail>
-        <fail unless="test.method">Must select some method in the IDE or set test.method</fail>
-        <webproject2:test-debug excludes="" includes="${javac.includes}" testClass="${test.class}" testMethod="${test.method}" testincludes="${test.class}" testmethods="${test.method}"/>
-    </target>
-    <target depends="init,compile-test" if="netbeans.home+have.tests" name="-debug-start-debugger-test">
-        <webproject1:nbjpdastart classpath="${debug.test.classpath}" name="${test.class}"/>
-    </target>
-    <target depends="init,compile-test,-debug-start-debugger-test,-debug-start-debuggee-test" name="debug-test"/>
-    <target depends="init,compile-test-single,-debug-start-debugger-test,-debug-start-debuggee-test-method" name="debug-test-method"/>
-    <target depends="init,-pre-debug-fix,compile-test-single" if="netbeans.home" name="-do-debug-fix-test">
-        <webproject1:nbjpdareload dir="${build.test.classes.dir}"/>
-    </target>
-    <target depends="init,-pre-debug-fix,-do-debug-fix-test" if="netbeans.home" name="debug-fix-test"/>
-    <!--
+       <!--
                 
                 CLEANUP SECTION
             -->
